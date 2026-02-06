@@ -1,6 +1,6 @@
 # Four.meme Sniper bot | Four.meme migration sniper bot
 
-BNB four.meme sniper bot that snipes on 0 blocok by using Blockrazor.
+BNB four.meme sniper bot that snipes on 0 blocok by using BlockRazor.
 
 ## Features
 
