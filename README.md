@@ -1,6 +1,6 @@
 # Four.meme Sniper bot | Four.meme migration sniper bot
 
-A real-time token mint listener for Four.meme using Web3.js WebSocket connection to BSC.
+BNB four.meme sniper bot that snipes on 0 blocok by using Blockrazor.
 
 ## Features
 
