@@ -6,6 +6,11 @@
 
 **The fastest and most reliable Four.meme sniper bot for Binance Smart Chain (BSC). Automatically detect and buy new tokens from whitelisted creators in under 0.3-1.3 seconds.**
 
+## Consult
+For mroe consulting for four.meme sniper bot
+feel free to reach out to me
+- [Telegram](https://t.me/roswellecho)
+
 ## Why This is the Best Four.meme Sniper Bot
 
 - **Lightning Fast**: 0.3-1.3 second execution time from detection to purchase
