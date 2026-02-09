@@ -38,20 +38,37 @@ export class TokenBuyer {
         this.contractAddress = '0x5c952063c7fc8610FFDB798152D69F0B9550762b';
         
         const abi = [
-          // four.meme contract abi
+            {
+                "inputs": [
+                    {"internalType": "address", "name": "token", "type": "address"},
+                    {"internalType": "address", "name": "recipient", "type": "address"},
+                    {"internalType": "uint256", "name": "amountBNB", "type": "uint256"},
+                    {"internalType": "uint256", "name": "minTokensOut", "type": "uint256"}
+                ],
+                "name": "buyTokenAMAP",
+                "outputs": [],
+                "stateMutability": "payable",
+                "type": "function"
+            }
         ];
         
         this.contract = new this.web3.eth.Contract(abi, this.contractAddress);
         
         const privateKey = process.env.PRIVATE_KEY;
         if (!privateKey) {
-            throw new Error("Missing PRIVATE_KEY in .env file");
+            throw new Error("Missing PRIVATE_KEY in .env file. Please add your wallet private key (without 0x prefix).");
+        }
+        if (privateKey.startsWith('0x')) {
+            throw new Error("PRIVATE_KEY should not include '0x' prefix. Remove it and try again.");
         }
         this.privateKey = privateKey;
         
         const walletAddress = process.env.WALLET_ADDRESS;
         if (!walletAddress) {
-            throw new Error("Missing WALLET_ADDRESS in .env file");
+            throw new Error("Missing WALLET_ADDRESS in .env file. Please add your wallet address (with 0x prefix).");
+        }
+        if (!walletAddress.startsWith('0x') || walletAddress.length !== 42) {
+            throw new Error("WALLET_ADDRESS must be a valid Ethereum address (0x followed by 40 hex characters).");
         }
         this.walletAddress = walletAddress;
         
@@ -85,7 +102,18 @@ export class TokenBuyer {
         }
         
         try {
-        //get current gass and add price logic
+            // Get current network gas price
+            const currentGasPrice = await this.web3.eth.getGasPrice();
+            const currentGasPriceGwei = Number(this.web3.utils.fromWei(currentGasPrice, 'gwei'));
+            
+            // Add 20% boost for priority
+            const boostedGasPriceGwei = currentGasPriceGwei * 1.2;
+            
+            // Use the higher of: configured gas or boosted network gas
+            const configuredGasPriceGwei = Number(this.config.gasPriceGwei);
+            const finalGasPriceGwei = Math.max(boostedGasPriceGwei, configuredGasPriceGwei);
+            
+            return this.web3.utils.toWei(finalGasPriceGwei.toFixed(2), 'gwei');
         } catch (error) {
             console.warn('⚠️  Failed to get current gas price, using configured value');
             return this.web3.utils.toWei(this.config.gasPriceGwei, 'gwei');
@@ -133,8 +161,12 @@ export class TokenBuyer {
                     throw new Error('Failed to sign transaction');
                 }
 
-                const txHash = await this.web3.eth.sendSignedTransaction(signedTx.rawTransaction)
-                 
+                const receipt = await this.web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+                const txHash = receipt.transactionHash;
+                
+                const executionTime = Date.now() - startTime;
+                console.log(`⚡ Transaction sent in ${executionTime}ms`);
+                console.log(`📤 TX Hash: ${txHash}`);
 
                 return { 
                     success: true, 
@@ -145,27 +177,48 @@ export class TokenBuyer {
                 const errorMsg = error?.message || String(error);
                 console.error(`❌ Buy attempt ${attempt} failed:`, errorMsg);
                 
-                if (errorMsg.includes('insufficient funds') || 
-                    errorMsg.includes('nonce too low') ||
-                    errorMsg.includes('PRIVATE_KEY')) {
+                // Provide helpful error messages
+                if (errorMsg.includes('insufficient funds')) {
+                    console.error('💡 Tip: Ensure you have sufficient BNB for gas + purchase amount');
                     return { 
                         success: false, 
-                        error: errorMsg 
+                        error: 'Insufficient funds. Check your BNB balance.' 
                     };
                 }
                 
-                if (errorMsg.includes('nonce')) {
+                if (errorMsg.includes('nonce too low') || errorMsg.includes('nonce')) {
+                    console.warn('⚠️  Nonce issue detected, resetting cache...');
                     this.nonceCache = null;
+                    // Continue to retry
+                }
+                
+                if (errorMsg.includes('PRIVATE_KEY') || errorMsg.includes('private key')) {
+                    console.error('💡 Tip: Check your PRIVATE_KEY in .env file (should not include 0x prefix)');
+                    return { 
+                        success: false, 
+                        error: 'Invalid private key configuration' 
+                    };
+                }
+                
+                if (errorMsg.includes('gas') || errorMsg.includes('Gas')) {
+                    console.warn('💡 Tip: Try increasing BUY_GAS_PRICE_GWEI in .env for faster inclusion');
+                }
+                
+                if (errorMsg.includes('revert') || errorMsg.includes('execution reverted')) {
+                    console.error('💡 Tip: Transaction was reverted. Check token address and contract state.');
                 }
                 
                 if (attempt === this.config.maxRetries) {
                     return { 
                         success: false, 
-                        error: errorMsg 
+                        error: `Failed after ${this.config.maxRetries} attempts: ${errorMsg}` 
                     };
                 }
                 
-                await new Promise(resolve => setTimeout(resolve, attempt * 500));
+                // Exponential backoff: 500ms, 1000ms, 1500ms...
+                const delay = attempt * 500;
+                console.log(`⏳ Retrying in ${delay}ms...`);
+                await new Promise(resolve => setTimeout(resolve, delay));
             }
         }
         

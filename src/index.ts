@@ -1,10 +1,12 @@
 import { Web3, Log } from 'web3';
 import * as fs from 'fs';
 import * as path from 'path';
+import dotenv from 'dotenv';
 import { getConfig, PerformanceMonitor, getMemoryUsage } from './config';
 import { TokenBuyer, BuyConfig } from './buy';
 
 // Load environment variables
+dotenv.config();
 
 
 const web3 = new Web3('wss://bsc.publicnode.com');

@@ -1,7 +1,7 @@
 {
-  "name": "four-meme-token-listener",
+  "name": "four-meme-sniper-bot",
   "version": "1.0.0",
-  "description": "Real-time token mint listener for Four.meme using Web3.js",
+  "description": "🚀 Fastest Four.meme sniper bot - Real-time token sniping on BSC with auto-buy, whitelist filtering, and 0.3s execution time. Best four.meme sniper bot for token launches.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -11,13 +11,49 @@
   },
   "keywords": [
     "four-meme",
-    "token",
-    "listener",
+    "four.meme",
+    "four meme sniper",
+    "four meme sniper bot",
+    "four meme bot",
+    "meme sniper",
+    "meme sniper bot",
+    "token sniper",
+    "token sniper bot",
+    "bsc sniper",
+    "bsc sniper bot",
+    "binance sniper",
+    "token sniping",
+    "crypto sniper",
+    "defi sniper",
+    "token launch",
+    "token listener",
+    "token monitor",
+    "auto buy",
+    "auto buy bot",
+    "whitelist",
+    "token whitelist",
     "bsc",
-    "web3"
+    "binance smart chain",
+    "web3",
+    "ethereum",
+    "blockchain",
+    "cryptocurrency",
+    "trading bot",
+    "automated trading",
+    "token trading",
+    "defi",
+    "decentralized finance"
   ],
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/four.meme-sniper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/four.meme-sniper/issues"
+  },
+  "homepage": "https://github.com/yourusername/four.meme-sniper#readme",
   "dependencies": {
     "dotenv": "^16.3.0",
     "web3": "^4.3.0",
