@@ -1,10 +1,10 @@
-# Four.meme Sniper Bot - Fastest Token Sniping on BSC
+# Flap Sniper Bot - Fastest Token Sniping on BSC
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.2-blue)](https://www.typescriptlang.org/)
 [![Web3.js](https://img.shields.io/badge/Web3.js-4.3-green)](https://web3js.readthedocs.io/)
 
-**The fastest and most reliable Four.meme sniper bot for Binance Smart Chain (BSC). Automatically detect and buy new tokens from whitelisted creators in under 0.3-1.3 seconds.**
+**The fastest and most reliable flap sniper bot for Binance Smart Chain (BSC). Automatically detect and buy new tokens from whitelisted creators in under 0.2-0.3 seconds.**
 
 ## Consult
 For mroe consulting for four.meme sniper bot
@@ -26,7 +26,6 @@ feel free to reach out to me
 
 ### Real-Time Token Detection
 - WebSocket connection to BSC for instant event detection
-- Monitors Four.meme contract (`0x5c952063c7fc8610ffdb798152d69f0b9550762b`)
 - Sub-second event processing (~100-500ms)
 
 ### Automatic Token Buying
@@ -51,8 +50,8 @@ feel free to reach out to me
 
 ```bash
 # Clone the repository
-git clone https://github.com/roswelly/four.meme-sniper.git
-cd four.meme-sniper
+git clone https://github.com/roswelly/bnb-flap-sniper.git
+cd bnb-flap-sniper
 
 # Install dependencies
 npm install
