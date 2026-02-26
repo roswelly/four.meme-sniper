@@ -7,11 +7,11 @@
 **The fastest and most reliable flap sniper bot for Binance Smart Chain (BSC). Automatically detect and buy new tokens from whitelisted creators in under 0.2-0.3 seconds.**
 
 ## Consult
-For mroe consulting for four.meme sniper bot
+For mroe consulting for flap sniper bot
 feel free to reach out to me
 - [Telegram](https://t.me/roswellecho)
 
-## Why This is the Best Four.meme Sniper Bot
+## Why This is the Best flap Sniper Bot
 
 - **Lightning Fast**: 0.3-1.3 second execution time from detection to purchase
 - **Real-time Detection**: WebSocket-based event monitoring for instant token detection
@@ -110,17 +110,10 @@ npm start
 
 ## How It Works
 
-The Four.meme sniper bot works in the following way:
+The flap sniper bot works in the following way:
 
-1. **Connection**: Establishes WebSocket connection to BSC Mainnet
-2. **Subscription**: Subscribes to `TokenCreate` events from Four.meme contract
-3. **Detection**: Detects new token mints in real-time (~100-500ms)
-4. **Filtering**: Checks if creator is in whitelist (cached, <1ms lookup)
-5. **Action**: If whitelisted:
-   - Saves token data to `whitelisted_tokens.json`
-   - Automatically buys the token (if enabled)
-   - Logs detailed alert with purchase confirmation
-6. **Optimization**: Uses nonce caching and gas optimization for fastest execution
+cors is tx parse, submit
+
 
 ### Architecture Flow
 
@@ -151,32 +144,6 @@ The Four.meme sniper bot works in the following way:
 │  Transaction Sent   │  ⚡ Fast execution
 └─────────────────────┘
 ```
-
-## Performance Benchmarks
-
-### Execution Times
-- **Event detection**: ~100-500ms (WebSocket)
-- **Whitelist check**: <1ms (cached)
-- **Transaction signing**: ~50-100ms
-- **Transaction submission**: ~200-800ms
-- **Total time to buy**: **~0.3-1.3 seconds** from event detection
-
-### Speed Optimizations
-
-1. **Nonce Caching**: Caches transaction nonce for 5 seconds to avoid RPC delays
-2. **Dynamic Gas Pricing**: Automatically boosts gas by 20% for faster inclusion
-3. **Asynchronous Buying**: Purchases don't block the event listener
-4. **HTTP RPC for Buying**: Uses faster HTTP endpoint for transaction submission
-5. **WebSocket for Monitoring**: Uses WebSocket for real-time event detection
-6. **Retry Logic**: Automatic retry with exponential backoff
-
-### Gas Price Strategy
-
-- Monitors current network gas price
-- Adds 20% boost for priority
-- Uses higher of: configured gas or boosted network gas
-- Default: 3 Gwei (fast and economical)
-
 ## Token Data Structure
 
 ```typescript
@@ -281,7 +248,7 @@ AUTO_BUY_ENABLED=false
 
 ## Related Projects
 
-- [Four.meme Platform](https://four.meme) - Official Four.meme platform
+- [Flap platform](https://flap.sh) - Official Flap platform
 - [BSCScan](https://bscscan.com) - BSC blockchain explorer
 - [Web3.js Documentation](https://web3js.readthedocs.io/) - Web3.js library docs
 
@@ -292,4 +259,4 @@ If you find this project useful, please consider giving it a star ⭐ on GitHub!
 
 ---
 
-**Keywords**: four.meme sniper bot, four meme sniper, four meme bot, bsc sniper bot, token sniper, meme token sniper, auto buy bot, four.meme auto buy, bsc token sniping, fastest meme sniper, four.meme trading bot
+**Keywords**: flap sniper bot, flap sniper, flap bot, bsc sniper bot, token sniper, meme token sniper, auto buy bot, flap auto buy, bsc token sniping, fastest meme sniper, flap trading bot
